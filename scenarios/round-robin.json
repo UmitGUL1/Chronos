@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "name": "Round Robin quantum comparison",
+  "scheduler": "rr",
+  "horizon": 10,
+  "quantum": 2,
+  "tasks": [
+    {
+      "id": "A",
+      "name": "A",
+      "execution": 5,
+      "release": 0,
+      "priority": 0,
+      "deadline": 20,
+      "period": 0,
+      "actions": []
+    },
+    {
+      "id": "B",
+      "name": "B",
+      "execution": 3,
+      "release": 0,
+      "priority": 0,
+      "deadline": 20,
+      "period": 0,
+      "actions": []
+    }
+  ],
+  "resources": [],
+  "interrupts": [],
+  "description": "q=2: A 0-2, B 2-4, A 4-6, B 6-7, A 7-8. Change quantum for comparison."
+}

@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "name": "FIFO mutex contention",
+  "scheduler": "fixed",
+  "horizon": 10,
+  "quantum": 2,
+  "tasks": [
+    {
+      "id": "owner",
+      "name": "owner",
+      "execution": 4,
+      "release": 0,
+      "priority": 1,
+      "deadline": 20,
+      "period": 0,
+      "actions": [
+        {
+          "offset": 0,
+          "kind": "lock",
+          "resource": "R"
+        },
+        {
+          "offset": 3,
+          "kind": "unlock",
+          "resource": "R"
+        }
+      ]
+    },
+    {
+      "id": "waiter",
+      "name": "waiter",
+      "execution": 2,
+      "release": 1,
+      "priority": 3,
+      "deadline": 20,
+      "period": 0,
+      "actions": [
+        {
+          "offset": 0,
+          "kind": "lock",
+          "resource": "R"
+        },
+        {
+          "offset": 1,
+          "kind": "unlock",
+          "resource": "R"
+        }
+      ]
+    }
+  ],
+  "resources": [
+    "R"
+  ],
+  "interrupts": [],
+  "description": "The waiter blocks from 1 to 3. Mutex ownership transfers FIFO."
+}

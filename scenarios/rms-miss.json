@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "name": "RMS overload",
+  "scheduler": "rms",
+  "horizon": 20,
+  "quantum": 2,
+  "tasks": [
+    {
+      "id": "A",
+      "name": "A",
+      "execution": 3,
+      "release": 0,
+      "priority": 0,
+      "deadline": 4,
+      "period": 4,
+      "actions": []
+    },
+    {
+      "id": "B",
+      "name": "B",
+      "execution": 3,
+      "release": 0,
+      "priority": 0,
+      "deadline": 5,
+      "period": 5,
+      "actions": []
+    }
+  ],
+  "resources": [],
+  "interrupts": [],
+  "description": "U=1.35; B misses deadline 5. RMS bound only says inconclusive."
+}

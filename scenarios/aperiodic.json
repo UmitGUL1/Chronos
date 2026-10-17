@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "name": "Aperiodic idle gaps",
+  "scheduler": "fcfs",
+  "horizon": 12,
+  "quantum": 2,
+  "tasks": [
+    {
+      "id": "A",
+      "name": "A",
+      "execution": 2,
+      "release": 3,
+      "priority": 0,
+      "deadline": 20,
+      "period": 0,
+      "actions": []
+    },
+    {
+      "id": "B",
+      "name": "B",
+      "execution": 1,
+      "release": 8,
+      "priority": 0,
+      "deadline": 20,
+      "period": 0,
+      "actions": []
+    }
+  ],
+  "resources": [],
+  "interrupts": [],
+  "description": "Idle 0-3, A 3-5, idle 5-8, B 8-9, idle 9-12."
+}

@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "name": "Priority inheritance",
+  "scheduler": "fixed",
+  "horizon": 16,
+  "quantum": 2,
+  "tasks": [
+    {
+      "id": "L",
+      "name": "L",
+      "execution": 8,
+      "release": 0,
+      "priority": 1,
+      "deadline": 20,
+      "period": 0,
+      "actions": [
+        {
+          "offset": 0,
+          "kind": "lock",
+          "resource": "R"
+        },
+        {
+          "offset": 6,
+          "kind": "unlock",
+          "resource": "R"
+        }
+      ]
+    },
+    {
+      "id": "M",
+      "name": "M",
+      "execution": 4,
+      "release": 3,
+      "priority": 2,
+      "deadline": 20,
+      "period": 0,
+      "actions": []
+    },
+    {
+      "id": "H",
+      "name": "H",
+      "execution": 2,
+      "release": 2,
+      "priority": 3,
+      "deadline": 8,
+      "period": 0,
+      "actions": [
+        {
+          "offset": 0,
+          "kind": "lock",
+          "resource": "R"
+        },
+        {
+          "offset": 1,
+          "kind": "unlock",
+          "resource": "R"
+        }
+      ]
+    }
+  ],
+  "resources": [
+    "R"
+  ],
+  "interrupts": [],
+  "priority_inheritance": true,
+  "description": "H completes at 8, with 4 ticks of blocking. L inherits priority 3 until tick 6."
+}

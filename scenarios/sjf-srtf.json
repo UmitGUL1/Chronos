@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "name": "SJF versus SRTF",
+  "scheduler": "srtf",
+  "horizon": 9,
+  "quantum": 2,
+  "tasks": [
+    {
+      "id": "A",
+      "name": "A",
+      "execution": 5,
+      "release": 0,
+      "priority": 0,
+      "deadline": 20,
+      "period": 0,
+      "actions": []
+    },
+    {
+      "id": "B",
+      "name": "B",
+      "execution": 2,
+      "release": 2,
+      "priority": 0,
+      "deadline": 20,
+      "period": 0,
+      "actions": []
+    }
+  ],
+  "resources": [],
+  "interrupts": [],
+  "description": "SRTF: A 0-2, B 2-4, A 4-7. SJF is nonpreemptive and finishes A at 5."
+}

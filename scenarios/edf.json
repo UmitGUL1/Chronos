@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "name": "EDF implicit deadlines",
+  "scheduler": "edf",
+  "horizon": 20,
+  "quantum": 2,
+  "tasks": [
+    {
+      "id": "A",
+      "name": "A",
+      "execution": 2,
+      "release": 0,
+      "priority": 0,
+      "deadline": 4,
+      "period": 4,
+      "actions": []
+    },
+    {
+      "id": "B",
+      "name": "B",
+      "execution": 2,
+      "release": 0,
+      "priority": 0,
+      "deadline": 5,
+      "period": 5,
+      "actions": []
+    }
+  ],
+  "resources": [],
+  "interrupts": [],
+  "description": "U=0.9 under ideal independent implicit-deadline assumptions. No misses expected."
+}

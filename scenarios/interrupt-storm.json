@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "name": "Interrupt storm",
+  "scheduler": "edf",
+  "horizon": 16,
+  "quantum": 2,
+  "tasks": [
+    {
+      "id": "worker",
+      "name": "worker",
+      "execution": 8,
+      "release": 0,
+      "priority": 0,
+      "deadline": 10,
+      "period": 0,
+      "actions": []
+    }
+  ],
+  "resources": [],
+  "interrupts": [
+    {
+      "id": "IRQ0",
+      "arrival": 0,
+      "duration": 2,
+      "priority": 2
+    },
+    {
+      "id": "IRQ1",
+      "arrival": 2,
+      "duration": 2,
+      "priority": 2
+    },
+    {
+      "id": "IRQ2",
+      "arrival": 4,
+      "duration": 2,
+      "priority": 2
+    },
+    {
+      "id": "IRQ3",
+      "arrival": 6,
+      "duration": 2,
+      "priority": 2
+    },
+    {
+      "id": "IRQ4",
+      "arrival": 8,
+      "duration": 2,
+      "priority": 2
+    },
+    {
+      "id": "IRQ5",
+      "arrival": 10,
+      "duration": 2,
+      "priority": 2
+    },
+    {
+      "id": "IRQ6",
+      "arrival": 12,
+      "duration": 2,
+      "priority": 2
+    },
+    {
+      "id": "IRQ7",
+      "arrival": 14,
+      "duration": 2,
+      "priority": 2
+    }
+  ],
+  "description": "Back-to-back IRQ handlers consume all CPU service. Worker misses deadline 10."
+}

@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "name": "Two-resource deadlock",
+  "scheduler": "rr",
+  "horizon": 12,
+  "quantum": 1,
+  "tasks": [
+    {
+      "id": "A",
+      "name": "A",
+      "execution": 4,
+      "release": 0,
+      "priority": 0,
+      "deadline": 10,
+      "period": 0,
+      "actions": [
+        {
+          "offset": 0,
+          "kind": "lock",
+          "resource": "R1"
+        },
+        {
+          "offset": 2,
+          "kind": "lock",
+          "resource": "R2"
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "name": "B",
+      "execution": 4,
+      "release": 0,
+      "priority": 0,
+      "deadline": 10,
+      "period": 0,
+      "actions": [
+        {
+          "offset": 0,
+          "kind": "lock",
+          "resource": "R2"
+        },
+        {
+          "offset": 2,
+          "kind": "lock",
+          "resource": "R1"
+        }
+      ]
+    }
+  ],
+  "resources": [
+    "R1",
+    "R2"
+  ],
+  "interrupts": [],
+  "description": "A/B each hold one resource and block at time 4; cycle A -> B -> A."
+}

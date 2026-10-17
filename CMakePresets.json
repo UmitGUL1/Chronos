@@ -1,0 +1,30 @@
+{
+  "version": 5,
+  "cmakeMinimumRequired": { "major": 3, "minor": 24, "patch": 0 },
+  "configurePresets": [
+    {
+      "name": "core-debug",
+      "displayName": "Qt-free core Debug",
+      "binaryDir": "${sourceDir}/build/core-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CHRONOS_BUILD_TESTS": "ON",
+        "CHRONOS_BUILD_DESKTOP": "OFF"
+      }
+    },
+    {
+      "name": "desktop-debug",
+      "inherits": "core-debug",
+      "binaryDir": "${sourceDir}/build/desktop-debug",
+      "cacheVariables": { "CHRONOS_BUILD_DESKTOP": "ON" }
+    }
+  ],
+  "buildPresets": [
+    { "name": "core-debug", "configurePreset": "core-debug", "configuration": "Debug" },
+    { "name": "desktop-debug", "configurePreset": "desktop-debug", "configuration": "Debug" }
+  ],
+  "testPresets": [
+    { "name": "core-debug", "configurePreset": "core-debug", "configuration": "Debug", "output": { "outputOnFailure": true } },
+    { "name": "desktop-debug", "configurePreset": "desktop-debug", "configuration": "Debug", "output": { "outputOnFailure": true } }
+  ]
+}

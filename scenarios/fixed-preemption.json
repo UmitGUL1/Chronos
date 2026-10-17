@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "name": "Fixed-priority preemption",
+  "scheduler": "fixed",
+  "horizon": 9,
+  "quantum": 2,
+  "tasks": [
+    {
+      "id": "A",
+      "name": "A",
+      "execution": 5,
+      "release": 0,
+      "priority": 1,
+      "deadline": 20,
+      "period": 0,
+      "actions": []
+    },
+    {
+      "id": "B",
+      "name": "B",
+      "execution": 2,
+      "release": 2,
+      "priority": 3,
+      "deadline": 20,
+      "period": 0,
+      "actions": []
+    }
+  ],
+  "resources": [],
+  "interrupts": [],
+  "description": "A 0-2, B 2-4, A 4-7; higher integer means higher priority."
+}

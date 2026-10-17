@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "name": "Basic FCFS",
+  "scheduler": "fcfs",
+  "horizon": 8,
+  "quantum": 2,
+  "tasks": [
+    {
+      "id": "A",
+      "name": "A",
+      "execution": 3,
+      "release": 0,
+      "priority": 0,
+      "deadline": 20,
+      "period": 0,
+      "actions": []
+    },
+    {
+      "id": "B",
+      "name": "B",
+      "execution": 2,
+      "release": 0,
+      "priority": 0,
+      "deadline": 20,
+      "period": 0,
+      "actions": []
+    }
+  ],
+  "resources": [],
+  "interrupts": [],
+  "description": "A [0,3), B [3,5), idle [5,8); utilization 0.625."
+}

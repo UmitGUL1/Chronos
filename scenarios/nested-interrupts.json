@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "name": "Nested interrupts and masking",
+  "scheduler": "fixed",
+  "horizon": 15,
+  "quantum": 2,
+  "tasks": [
+    {
+      "id": "A",
+      "name": "A",
+      "execution": 6,
+      "release": 0,
+      "priority": 0,
+      "deadline": 20,
+      "period": 0,
+      "actions": []
+    }
+  ],
+  "resources": [],
+  "interrupts": [
+    {
+      "id": "low",
+      "arrival": 1,
+      "duration": 4,
+      "priority": 1
+    },
+    {
+      "id": "high",
+      "arrival": 2,
+      "duration": 1,
+      "priority": 3
+    },
+    {
+      "id": "deferred",
+      "arrival": 7,
+      "duration": 1,
+      "priority": 2
+    }
+  ],
+  "masks": [
+    {
+      "start": 6,
+      "end": 9
+    }
+  ],
+  "description": "High nests at 2. Deferred waits until 9; active handlers continue through masks."
+}

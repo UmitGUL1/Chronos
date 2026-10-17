@@ -1,0 +1,46 @@
+name: Build and verify ChronOS
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        desktop: ['OFF', 'ON']
+        include:
+          - os: ubuntu-latest
+            qtarch: gcc_64
+          - os: windows-latest
+            qtarch: win64_msvc2022_64
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate packaged assets
+        run: node scripts/check-assets.mjs
+      - uses: jurplel/install-qt-action@v4
+        if: matrix.desktop == 'ON'
+        with:
+          version: '6.8.3'
+          arch: ${{ matrix.qtarch }}
+          cache: true
+      - name: Configure
+        run: cmake -S . -B build/ci -DCHRONOS_BUILD_DESKTOP=${{ matrix.desktop }} -DCMAKE_BUILD_TYPE=Debug
+      - name: Build
+        run: cmake --build build/ci --config Debug --parallel 2
+      - name: Test
+        run: ctest --test-dir build/ci -C Debug --output-on-failure --timeout 90
+  sanitizers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: cmake -S . -B build/asan -DCHRONOS_SANITIZERS=ON -DCHRONOS_BUILD_DESKTOP=OFF -DCMAKE_BUILD_TYPE=Debug
+      - run: cmake --build build/asan --parallel 2
+      - run: ctest --test-dir build/asan --output-on-failure --timeout 90

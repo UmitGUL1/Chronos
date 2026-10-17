@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "name": "Mixed overlapping periodic and aperiodic jobs",
+  "scheduler": "edf",
+  "horizon": 18,
+  "quantum": 2,
+  "tasks": [
+    {
+      "id": "periodic",
+      "name": "periodic",
+      "execution": 4,
+      "release": 0,
+      "priority": 0,
+      "deadline": 8,
+      "period": 3,
+      "actions": []
+    },
+    {
+      "id": "urgent",
+      "name": "urgent",
+      "execution": 1,
+      "release": 5,
+      "priority": 0,
+      "deadline": 2,
+      "period": 0,
+      "actions": []
+    }
+  ],
+  "resources": [],
+  "interrupts": [],
+  "description": "Periodic execution > period creates overlapping Job instances; finite horizon truncates work."
+}

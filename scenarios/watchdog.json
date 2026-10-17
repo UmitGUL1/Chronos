@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "name": "Watchdog timeout",
+  "scheduler": "fcfs",
+  "horizon": 15,
+  "quantum": 2,
+  "tasks": [
+    {
+      "id": "worker",
+      "name": "worker",
+      "execution": 12,
+      "release": 0,
+      "priority": 0,
+      "deadline": 20,
+      "period": 0,
+      "actions": []
+    }
+  ],
+  "resources": [],
+  "interrupts": [],
+  "watchdog": {
+    "enabled": true,
+    "timeout": 5,
+    "heartbeats": [
+      2,
+      4
+    ],
+    "terminate_jobs": false
+  },
+  "description": "Heartbeats 2 and 4 invalidate stale timers. Alerts at 9 and 14."
+}
