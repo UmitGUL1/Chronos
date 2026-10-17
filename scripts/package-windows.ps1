@@ -25,6 +25,10 @@ $desktop = Join-Path $binRoot 'chronos-desktop.exe'
 & $deploy --release --qmldir (Join-Path $sourceRoot 'ui/qml') --compiler-runtime --no-translations $desktop
 if ($LASTEXITCODE -ne 0) { throw 'Qt runtime deployment failed.' }
 
+# windeployqt selects qwindows for this desktop. The isolated CI smoke also
+# needs qoffscreen; without it Qt can show a blocking platform-error dialog.
+Copy-Item -LiteralPath (Join-Path $qtRoot 'plugins/platforms/qoffscreen.dll') -Destination (Join-Path $binRoot 'platforms')
+
 # App-local MSVC CRT makes the ZIP independent of a separately installed SDK.
 $vswhere = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio/Installer/vswhere.exe'
 if (Test-Path -LiteralPath $vswhere) {
@@ -52,13 +56,14 @@ Copy-Item -LiteralPath (Join-Path $sourceRoot 'docs/manual-qa.md') -Destination 
 
 # Validate only the deployed files, without development Qt or compiler PATHs.
 $savedEnvironment = @{}
-foreach ($key in @('PATH','QT_PLUGIN_PATH','QML2_IMPORT_PATH','QML_IMPORT_PATH','QT_QPA_PLATFORM','QT_QUICK_BACKEND','QT_FORCE_STDERR_LOGGING')) {
+foreach ($key in @('PATH','QT_PLUGIN_PATH','QT_QPA_PLATFORM_PLUGIN_PATH','QML2_IMPORT_PATH','QML_IMPORT_PATH','QT_QPA_PLATFORM','QT_QUICK_BACKEND','QT_FORCE_STDERR_LOGGING')) {
     $savedEnvironment[$key] = [Environment]::GetEnvironmentVariable($key,'Process')
 }
 $workingFolder = (Get-Location).Path
 try {
     $env:PATH = "$binRoot;$env:SystemRoot\System32;$env:SystemRoot"
     $env:QT_PLUGIN_PATH = ''
+    $env:QT_QPA_PLATFORM_PLUGIN_PATH = ''
     $env:QML2_IMPORT_PATH = ''
     $env:QML_IMPORT_PATH = ''
     $env:QT_QPA_PLATFORM = 'offscreen'
@@ -73,6 +78,7 @@ try {
     $process = Start-Process -FilePath $desktop -ArgumentList '--smoke' -WorkingDirectory $packageRoot -WindowStyle Hidden -PassThru -RedirectStandardError (Join-Path $buildRoot 'package-stderr.log') -RedirectStandardOutput (Join-Path $buildRoot 'package-stdout.log')
     if (-not $process.WaitForExit(30000)) {
         $process.Kill()
+        Get-Content -LiteralPath (Join-Path $buildRoot 'package-stderr.log') -ErrorAction SilentlyContinue | Write-Output
         throw 'Packaged desktop smoke exceeded 30 seconds.'
     }
     if ($process.ExitCode -ne 0) {
@@ -94,3 +100,4 @@ try {
     manual_gui_qa = 'pending; see manual-qa.md'
 } | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $packageRoot 'verification.json') -Encoding utf8
 Write-Output "Verified portable package: $packageRoot"
+
