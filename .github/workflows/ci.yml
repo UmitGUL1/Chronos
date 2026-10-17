@@ -5,6 +5,9 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+concurrency:
+  group: chronos-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   build:
     strategy:
@@ -12,11 +15,6 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest]
         desktop: ['OFF', 'ON']
-        include:
-          - os: ubuntu-latest
-            qtarch: gcc_64
-          - os: windows-latest
-            qtarch: win64_msvc2022_64
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -29,7 +27,6 @@ jobs:
         if: matrix.desktop == 'ON'
         with:
           version: '6.8.3'
-          arch: ${{ matrix.qtarch }}
           cache: true
       - name: Configure
         run: cmake -S . -B build/ci -DCHRONOS_BUILD_DESKTOP=${{ matrix.desktop }} -DCMAKE_BUILD_TYPE=Debug
@@ -44,3 +41,4 @@ jobs:
       - run: cmake -S . -B build/asan -DCHRONOS_SANITIZERS=ON -DCHRONOS_BUILD_DESKTOP=OFF -DCMAKE_BUILD_TYPE=Debug
       - run: cmake --build build/asan --parallel 2
       - run: ctest --test-dir build/asan --output-on-failure --timeout 90
+
