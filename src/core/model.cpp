@@ -111,3 +111,5 @@ Analysis analyze(const Scenario& s, Policy policy) {
         "Feasible under stated EDF assumptions (U <= 1)." : "Infeasible under stated EDF assumptions (U > 1).";
     return a;
 }
+} // namespace chronos
+
