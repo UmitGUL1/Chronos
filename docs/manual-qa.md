@@ -20,4 +20,6 @@ These checks are pending until a person or supported UI driver performs them.
 - Compare policies and inspect side-by-side metrics/timelines.
 - Export JSON/CSV/SVG to an empty directory; reject overwriting existing reports.
 - Close during playback, pause and comparison; verify no hung background process.
-- Capture real screenshots only after checking layout and visible results.
+- Automated Linux/Xvfb captures have been visually inspected; two are published.
+  Analytics comparison-card controls overlap and need a layout fix. Windows
+  interaction, resizing and full-page acceptance remain pending.

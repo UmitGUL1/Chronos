@@ -43,7 +43,10 @@ diagnostics were retained so subsequent desktop failures appear in CTest logs.
 Current tests are meaningful references and invariants, not an exhaustive proof.
 ASan/UBSan does not establish absence of data races. Manual controls, dialogs,
 resizing, visual hierarchy, exports through the UI and shutdown under load still
-need interaction testing. No actual screenshots have been captured.
+need interaction testing. Two actual rendered captures are now in the README;
+they establish those visible states, not full interactive acceptance.
+The captured Analytics comparison shows overlapping controls in narrow cards;
+this layout defect remains pending and that capture is not used in the gallery.
 
 Ready/wait/donation scans can be quadratic. Snapshot serialization copies full
 history before clipping for display. Export is synchronous in the worker and

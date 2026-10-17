@@ -29,7 +29,7 @@ No local test execution is claimed.
 | 6 | Qt/QML builds and offscreen startup/worker smoke passes; full interaction pending |
 | 7 | 16 scenarios, replay, comparison and report persistence tests pass |
 | 8 | Worker/independent-engine tests pass; ASan/UBSan passes; race/stress/profile work pending |
-| 9 | Docs/license and Windows runtime ZIP ready; screenshots/manual QA pending |
+| 9 | Docs/license, Windows runtime ZIP and actual screenshots ready; full manual QA pending |
 
 ## CI fixes
 
@@ -59,5 +59,5 @@ percentage or visual QA claim is made. The runtime ZIP is a development preview.
 
 ## Next milestone
 
-Run manual desktop interaction/resize/shutdown checks, capture real screenshots
-and prepare a signed installer if distribution beyond the preview is needed.
+Run manual desktop interaction/resize/shutdown checks and prepare a signed
+installer if distribution beyond the preview is needed.

@@ -31,6 +31,17 @@ engineering/learning simulator, **not a functioning production RTOS kernel**.
 There are no fabricated screenshots, pass counts, CI badges or performance claims.
 See [IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md) for incomplete work.
 
+## Desktop screenshots
+
+Actual Qt/QML application captures on Linux/Xvfb with software rendering.
+The built-in fixed-priority workload has completed at virtual tick 12.
+
+![Dashboard with engine metrics and preemption timeline](docs/screenshots/dashboard.png)
+
+![Scheduler Lab with actual job trace](docs/screenshots/scheduler-lab.png)
+
+See [capture provenance and reproduction](docs/screenshots/README.md).
+
 ## Build the CLI and tests
 
 Requires CMake 3.24+, a C++20 compiler, Git and initial network access.
@@ -100,7 +111,7 @@ zero; +1 tick uses the same engine and advances one virtual tick.
 
 The offscreen smoke test launches QML, steps the engine, starts/pauses playback
 and rejects QML warnings. Full manual interaction and visual/resizing inspection
-remain pending. No screenshots were captured. Qt runtime deployment packaging
+remain pending. Two actual desktop captures are shown above. Qt runtime deployment packaging
 (macdeployqt) is not implemented. Windows runtime ZIP generation is configured
 in its own workflow and validated separately from the SDK-based Debug smoke.
 

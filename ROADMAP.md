@@ -21,5 +21,6 @@ successful Windows/Linux matrix and exact source revision.
 | Isolated scheduling latency/peak memory instrumentation | Planned |
 | Dependency/action commit hash locking | Planned |
 | Windows desktop runtime ZIP | Release tests and deployed startup pass |
-| Actual screenshots | Pending manual desktop QA |
+| Actual screenshots | Two Qt/QML rendered captures in README |
+| Compact comparison-card layout | Control overlap observed; fix pending |
 | Multi-core scheduling/general recovery | Later extension |
