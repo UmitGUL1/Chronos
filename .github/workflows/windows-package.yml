@@ -1,0 +1,78 @@
+name: Windows portable package
+on:
+  push:
+    branches: [main]
+    paths-ignore: ['docs/**', 'README.md', 'ROADMAP.md', 'IMPLEMENTATION_STATUS.md']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: windows-package-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  portable:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jurplel/install-qt-action@v4
+        with:
+          version: '6.8.3'
+          cache: true
+      - name: Configure Release
+        run: cmake -S . -B build/windows-release -DCHRONOS_BUILD_DESKTOP=ON -DCMAKE_BUILD_TYPE=Release
+      - name: Build Release
+        run: cmake --build build/windows-release --config Release --parallel 2
+      - name: Test Release
+        run: ctest --test-dir build/windows-release -C Release --output-on-failure --timeout 90
+      - name: Measure Release workloads
+        shell: pwsh
+        run: |
+          $measurementRoot = 'build/windows-release/measurements'
+          New-Item -ItemType Directory -Path $measurementRoot | Out-Null
+          1..3 | ForEach-Object {
+            & ./build/windows-release/Release/chronos-benchmark.exe | Set-Content -LiteralPath "$measurementRoot/run-$_.csv" -Encoding utf8
+            if ($LASTEXITCODE -ne 0) { throw 'Benchmark execution failed.' }
+          }
+          $compilerFile = Get-ChildItem -LiteralPath 'build/windows-release/CMakeFiles' -Filter CMakeCXXCompiler.cmake -Recurse | Select-Object -First 1
+          $compilerVersion = (Select-String -LiteralPath $compilerFile.FullName -Pattern 'set\(CMAKE_CXX_COMPILER_VERSION "([^"]+)"\)').Matches.Groups[1].Value
+          [ordered]@{
+            source_commit = '${{ github.sha }}'
+            configuration = 'Release'
+            compiler = "MSVC $compilerVersion"
+            os = (Get-CimInstance Win32_OperatingSystem).Caption
+            cpu = @((Get-CimInstance Win32_Processor).Name)
+            ram_bytes = (Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory
+            repetitions = 3
+            jobs = @(10,100,1000,10000)
+            note = 'Construction plus simulation; excludes final snapshot copy. Amortized per-decision time is not isolated scheduler latency.'
+          } | ConvertTo-Json | Set-Content -LiteralPath "$measurementRoot/environment.json" -Encoding utf8
+      - name: Deploy and verify standalone runtime
+        shell: pwsh
+        run: ./scripts/package-windows.ps1
+      - name: Include measurement evidence
+        shell: pwsh
+        run: Copy-Item -LiteralPath 'build/windows-release/measurements' -Destination 'dist/ChronOS' -Recurse
+      - name: Record SHA-256 manifest
+        shell: pwsh
+        run: |
+          $packageRoot = (Resolve-Path 'dist/ChronOS').Path
+          Get-ChildItem -LiteralPath $packageRoot -Recurse -File | Sort-Object FullName | ForEach-Object {
+            $relativePath = [IO.Path]::GetRelativePath($packageRoot, $_.FullName).Replace('\','/')
+            '{0}  {1}' -f (Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash.ToLowerInvariant(), $relativePath
+          } | Set-Content -LiteralPath 'dist/ChronOS/SHA256SUMS.txt' -Encoding utf8
+      - name: Upload Windows ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: ChronOS-Windows-x64
+          path: dist/ChronOS/
+          if-no-files-found: error
+          retention-days: 30
+      - name: Upload package diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Windows-package-diagnostics
+          path: |
+            build/windows-release/*package*.log
+            build/windows-release/Testing/Temporary/LastTest.log

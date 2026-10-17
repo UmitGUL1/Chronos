@@ -64,6 +64,20 @@ Reports require a fresh directory and refuse to overwrite existing report files.
 
 ## Build the desktop
 
+### Portable Windows build
+
+The [Windows portable package workflow](https://github.com/UmitGUL1/Chronos/actions/workflows/windows-package.yml)
+builds Release, runs the full suite, deploys Qt/QML and the MSVC runtime, then
+checks the deployed CLI and desktop with SDK/compiler paths removed. A successful
+run provides a **ChronOS-Windows-x64** ZIP artifact. Extract the complete archive
+and open **Start-ChronOS.cmd**. No Qt SDK or compiler should be needed to run it.
+Artifacts expire after 30 days; rerun the workflow to produce a new build.
+See [package instructions](docs/windows-package.md) and the
+[manual acceptance checklist](docs/manual-qa.md). The ZIP is an unsigned development
+build, not an installer or a signed production release.
+
+### Build from source
+
 Install a compiler-compatible Qt 6.5+ kit with Qt Quick, Quick Controls 2 and Qt
 Quick Dialogs. This includes MSVC vs MinGW ABI compatibility on Windows.
 
@@ -84,7 +98,8 @@ zero; +1 tick uses the same engine and advances one virtual tick.
 The offscreen smoke test launches QML, steps the engine, starts/pauses playback
 and rejects QML warnings. Full manual interaction and visual/resizing inspection
 remain pending. No screenshots were captured. Qt runtime deployment packaging
-(windeployqt/macdeployqt) and a distributable GUI binary are not included.
+(macdeployqt) is not implemented. Windows runtime ZIP generation is configured
+in its own workflow and validated separately from the SDK-based Debug smoke.
 
 ## Demonstrations
 
