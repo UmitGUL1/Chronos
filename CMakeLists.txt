@@ -53,6 +53,8 @@ if(CHRONOS_BUILD_DESKTOP)
   qt_standard_project_setup(REQUIRES 6.5)
   find_package(Threads REQUIRED)
   qt_add_executable(chronos-desktop apps/desktop/main.cpp apps/desktop/controller.cpp apps/desktop/controller.hpp)
+  # Keep diagnostics visible to CTest on Windows development/CI builds.
+  set_target_properties(chronos-desktop PROPERTIES WIN32_EXECUTABLE FALSE)
   qt_add_qml_module(chronos-desktop URI ChronOS VERSION 1.0
     QML_FILES ui/qml/Main.qml ui/qml/Timeline.qml ui/qml/WaitGraph.qml)
   target_link_libraries(chronos-desktop PRIVATE chronos-io Qt6::Quick Qt6::QuickControls2 Threads::Threads)
@@ -75,3 +77,4 @@ if(CHRONOS_SANITIZERS AND NOT MSVC)
     target_link_options(${target} PUBLIC -fsanitize=address,undefined)
   endforeach()
 endif()
+
