@@ -17,8 +17,9 @@ successful Windows/Linux matrix and exact source revision.
 | 16 scenario assets | Replay and accounting integration passes |
 | Linux ASan/UBSan | All 44 CTest entries pass |
 | Host stress and ThreadSanitizer | Planned |
-| 10–10,000-job benchmark runner | Compiles; measurement pending |
+| 10-10,000-job benchmark runner | Three Windows Release samples recorded |
 | Isolated scheduling latency/peak memory instrumentation | Planned |
 | Dependency/action commit hash locking | Planned |
-| Actual screenshots and desktop runtime package | Planned |
+| Windows desktop runtime ZIP | Release tests and deployed startup pass |
+| Actual screenshots | Pending manual desktop QA |
 | Multi-core scheduling/general recovery | Later extension |

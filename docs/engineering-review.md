@@ -9,8 +9,9 @@ Core CTest suites pass 44 entries each; Qt suites pass 45 including offscreen
 startup; Linux ASan/UBSan passes 44. See ci-verification.md for compiler versions,
 test timings and the precise limits of this evidence.
 
-The sources remain a development preview, with full interactive/visual testing,
-benchmark measurements and distributable runtime packaging still pending.
+The sources remain a development preview, with full interactive/visual testing
+pending. A Windows runtime ZIP passes deployed startup checks; three Release
+benchmark samples are recorded in performance.md and ci-verification.md.
 
 ## Engineering assessment
 
@@ -46,14 +47,14 @@ need interaction testing. No actual screenshots have been captured.
 
 Ready/wait/donation scans can be quadratic. Snapshot serialization copies full
 history before clipping for display. Export is synchronous in the worker and
-cannot be interrupted within one operation. There are no benchmark measurements,
-isolated scheduling latency or peak-memory results. Dependency/action versions
+cannot be interrupted within one operation. Elapsed workload measurements are
+recorded, but isolated scheduling latency and peak memory are not. Dependency/action versions
 use release tags rather than immutable hashes.
 
 One ideal CPU and zero switching overhead are modeled. There is no production
 RTOS kernel, multicore scheduling, general deadlock recovery, job restart,
-hardware integration or arbitrary-model schedulability proof. Qt runtime release
-bundles and full GUI test automation remain pending.
+hardware integration or arbitrary-model schedulability proof. A Windows runtime
+ZIP is available; a signed installer and full GUI test automation remain pending.
 
 ## Interview discussion
 

@@ -29,7 +29,7 @@ No local test execution is claimed.
 | 6 | Qt/QML builds and offscreen startup/worker smoke passes; full interaction pending |
 | 7 | 16 scenarios, replay, comparison and report persistence tests pass |
 | 8 | Worker/independent-engine tests pass; ASan/UBSan passes; race/stress/profile work pending |
-| 9 | English docs/diagrams/license/CI/install rules ready; screenshots/distribution packaging pending |
+| 9 | Docs/license and Windows runtime ZIP ready; screenshots/manual QA pending |
 
 ## CI fixes
 
@@ -43,8 +43,10 @@ successful source revision above.
 Passing tests establish the covered references and bounded invariants, not a
 universal correctness guarantee or production RTOS certification. Manual
 interaction/visual/resizing checks, ThreadSanitizer, host stress, immutable
-dependency/action hash locks, benchmark results and Qt runtime deployment bundles
-remain pending. Resource/interrupt configuration uses the full JSON editor.
+dependency/action hash locks and signed installer remain pending. A Windows
+runtime ZIP and three actual Release benchmark samples are now available; see
+docs/ci-verification.md and docs/performance.md. Resource/interrupt configuration
+uses the full JSON editor.
 
 Scheduler/wait/donation operations scan jobs and can be quadratic. Snapshot
 serialization copies history before UI clipping. Cancellation is at event-batch
@@ -52,10 +54,10 @@ boundaries and cannot interrupt a large batch or synchronous export.
 
 Multi-core scheduling, generalized recovery, job restart/per-job watchdogs and
 fixed-priority response-time recurrence are not implemented. Isolated scheduler
-latency and peak-memory instrumentation are not implemented. No benchmark,
-coverage percentage, visual QA or packaged-release claim is made.
+latency and peak-memory instrumentation are not implemented. No coverage
+percentage or visual QA claim is made. The runtime ZIP is a development preview.
 
 ## Next milestone
 
-Run manual desktop interaction/resize/shutdown checks, measure Release workloads,
-capture real screenshots and prepare a runtime-bundled Windows distribution.
+Run manual desktop interaction/resize/shutdown checks, capture real screenshots
+and prepare a signed installer if distribution beyond the preview is needed.

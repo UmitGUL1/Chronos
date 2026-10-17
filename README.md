@@ -10,7 +10,8 @@ engineering/learning simulator, **not a functioning production RTOS kernel**.
 > Core configurations pass 44 CTest entries each; Qt 6.8.3 configurations pass
 > 45 each, including an offscreen desktop launch. Linux ASan/UBSan passes 44.
 > See [CI verification](docs/ci-verification.md) for the exact source revision
-> and run. Full manual GUI testing and release packaging remain pending.
+> and run. A verified portable Windows Release ZIP is available. Full manual
+> GUI testing and a signed installer remain pending.
 
 ## Source capabilities
 
@@ -72,6 +73,8 @@ checks the deployed CLI and desktop with SDK/compiler paths removed. A successfu
 run provides a **ChronOS-Windows-x64** ZIP artifact. Extract the complete archive
 and open **Start-ChronOS.cmd**. No Qt SDK or compiler should be needed to run it.
 Artifacts expire after 30 days; rerun the workflow to produce a new build.
+[Download the verified Windows ZIP](https://github.com/UmitGUL1/Chronos/actions/runs/39016039228/artifacts/12094821269).
+This build passed 45 Release tests and deployed CLI/desktop startup checks.
 See [package instructions](docs/windows-package.md) and the
 [manual acceptance checklist](docs/manual-qa.md). The ZIP is an unsigned development
 build, not an installer or a signed production release.
@@ -147,6 +150,7 @@ ctest --test-dir build/asan --output-on-failure
 Local compilation remains unavailable, but GitHub Actions has compiled and
 tested the project on Windows and Linux, including Qt smoke and ASan/UBSan.
 The source repository is [UmitGUL1/Chronos](https://github.com/UmitGUL1/Chronos).
-CI runs do not replace manual desktop interaction or performance measurements.
+Full manual desktop interaction remains pending. Three actual Release benchmark
+runs and their limits are recorded in [performance results](docs/performance.md).
 
 License: MIT for project code. Dependencies retain their own licenses.

@@ -37,7 +37,26 @@ errors. It is not a full mouse/keyboard interaction or visual layout test.
 ## Remaining verification
 
 Manual task editing, file dialogs, timeline interactions, full page interaction,
-resizing/visual inspection and packaged Windows distribution still need checks.
+resizing/visual inspection still need checks.
 ThreadSanitizer and host stress testing are not implied by ASan/UBSan success.
-Benchmark execution and isolated scheduling latency/peak-memory measurements
-remain pending; no performance claim is made.
+Isolated scheduling latency/peak-memory measurements remain pending.
+
+## Portable Windows follow-up
+
+Source `d5edcb351a40772050b47d44a2a7bf754eaf4e0d` passed all five Debug matrix
+jobs in [run 39016039205](https://github.com/UmitGUL1/Chronos/actions/runs/39016039205).
+The [Release package run 39016039228](https://github.com/UmitGUL1/Chronos/actions/runs/39016039228)
+passed 45 tests in 2.30 seconds, then verified the deployed priority-inheritance
+CLI result (H completes at tick 8) and offscreen GUI smoke with SDK/compiler
+paths removed. The offscreen plugin is explicitly bundled after deployment
+testing exposed its absence in the first package attempt.
+
+[Artifact 12094821269](https://github.com/UmitGUL1/Chronos/actions/runs/39016039228/artifacts/12094821269)
+contains the runtime, launcher, scenarios, license notices, verification.json,
+file checksums, manual QA checklist and measurement files. The downloaded ZIP
+was verified at 37,771,444 bytes with SHA-256:
+`83492e02f6067ed80e89e17aa0f4dbc1736a5b3856a110b35fae92073aa17b73`.
+Artifact retention is 30 days. This is an unsigned development preview.
+
+Three actual Windows Release benchmark runs are recorded with raw CSV and
+environment metadata; see performance.md for results and workload limitations.

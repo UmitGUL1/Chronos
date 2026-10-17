@@ -1,0 +1,18 @@
+{
+  "source_commit": "d5edcb351a40772050b47d44a2a7bf754eaf4e0d",
+  "configuration": "Release",
+  "compiler": "MSVC 19.51.36260.0",
+  "os": "Microsoft Windows Server 2025 Datacenter",
+  "cpu": [
+    "AMD EPYC 9V74 80-Core Processor                "
+  ],
+  "ram_bytes": 17174360064,
+  "repetitions": 3,
+  "jobs": [
+    10,
+    100,
+    1000,
+    10000
+  ],
+  "note": "Construction plus simulation; excludes final snapshot copy. Amortized per-decision time is not isolated scheduler latency."
+}
