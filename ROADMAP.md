@@ -1,29 +1,24 @@
 # Roadmap
 
-Status legend: Source implemented means written, **not verified**. Verified is
-reserved for successful build/runtime evidence, which is currently absent.
+Verification is scoped to actual tests. See docs/ci-verification.md for the
+successful Windows/Linux matrix and exact source revision.
 
 | Work | Status |
 | --- | --- |
-| C++20/CMake targets and presets | Source implemented; presets parsed |
-| Deterministic engine and overlapping jobs | Source implemented, unverified |
-| Seven schedulers | Source implemented, unverified |
-| Mutexes, inversion, transitive inheritance | Source implemented, unverified |
-| Deadlock graph/cycle history | Source implemented, unverified |
-| Nested IRQs, masks, latency | Source implemented, unverified |
-| Watchdog heartbeat/alert/termination | Source implemented, unverified |
-| Metrics and assumption-limited RMS/EDF | Source implemented, unverified |
-| CLI, JSON configuration, report export | Source implemented, unverified |
-| Qt/QML desktop and worker bridge | Source implemented, unverified |
-| 16 scenario assets | JSON syntax verified; simulation behavior unverified |
-| GoogleTest references and integration | 42 cases declared, unexecuted |
-| Host stress and race validation | Planned / requires toolchain |
-| 10–10,000-job benchmark runner | Source implemented; no measured results |
-| Dedicated scheduling latency/peak memory instrumentation | Planned |
-| Windows/Linux/Qt/sanitizer CI | Workflow written, not run |
+| C++20/CMake core and desktop | Windows/Linux CI builds verified |
+| Deterministic engine and overlapping jobs | Reference/replay/accounting tests pass |
+| Seven schedulers | Reference tests pass |
+| Mutexes, inversion, transitive inheritance | Reference tests pass |
+| Deadlock history, nested IRQs/masks, watchdog | Reference tests pass |
+| Metrics and assumption-limited RMS/EDF | Reference tests pass |
+| CLI, JSON configuration, report export | Persistence/reference tests pass |
+| Qt/QML desktop and worker bridge | Offscreen startup/step/play/pause smoke passes |
+| Full interactive and visual desktop QA | Pending |
+| 16 scenario assets | Replay and accounting integration passes |
+| Linux ASan/UBSan | All 44 CTest entries pass |
+| Host stress and ThreadSanitizer | Planned |
+| 10–10,000-job benchmark runner | Compiles; measurement pending |
+| Isolated scheduling latency/peak memory instrumentation | Planned |
 | Dependency/action commit hash locking | Planned |
 | Actual screenshots and desktop runtime package | Planned |
-| Multi-core scheduling and general recovery | Later extension |
-
-The next milestone is a passing CI matrix followed by real desktop interaction
-checks, not another claim of feature completion based solely on source files.
+| Multi-core scheduling/general recovery | Later extension |

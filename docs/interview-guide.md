@@ -4,7 +4,8 @@
 
 A deterministic simulator of scheduling/RTOS concepts, not a bootable kernel,
 device driver, hardware emulator or timing-certified embedded system. Be candid
-that this source snapshot has not yet passed compilation/runtime validation.
+about the scope of verification: Windows/Linux builds, core tests, Qt offscreen
+startup and ASan/UBSan pass; manual interaction, race testing and profiling remain.
 
 ## Why OOP?
 
@@ -39,13 +40,12 @@ is not automatic. Watchdog termination is a separate explicitly configured polic
 
 Integer time, stable IDs, monotonic insertion sequence, documented same-time
 ordering, FIFO queues and no dependence on host thread scheduling. Reference
-tests compare exact intervals and full reports. These tests are provided but must
-be executed before claiming correctness.
+tests compare exact intervals and full reports. They pass on the CI platforms;
+passing examples and bounded invariant checks are evidence, not a universal proof.
 
 ## What would you improve?
 
-Run the full CI matrix first. Investigate all failures before presenting it as
-working. Then profile ready scans and snapshot copies, extract resource/interrupt
+Keep the full CI matrix passing. Then profile ready scans and snapshot copies, extract resource/interrupt
 managers if growth warrants it, add isolated scheduler latency/peak memory
 measurements, more GUI tests, dependency hashes and verified release packaging.
 Do not invent benchmark or coverage figures in an interview.

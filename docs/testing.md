@@ -1,8 +1,11 @@
 # Verification status and commands
 
-**C++ tests have not run.** The repository declares 42 GoogleTest cases, plus CLI
-help, CLI reference and optional desktop smoke CTest entries. The count is from
-source inspection, not an executed/pass count. No coverage percentage is claimed.
+GitHub Actions passed all five build jobs: 44 CTest entries on Windows/Linux
+core, 45 on Windows/Linux Qt builds, and 44 under Linux ASan/UBSan. Each core
+suite contains 42 GoogleTest cases plus CLI help and CLI reference integration;
+desktop adds the offscreen smoke test. These are repeated configurations of the
+same tests, not 222 distinct cases. See ci-verification.md for exact evidence.
+No coverage percentage or comprehensive GUI interaction coverage is claimed.
 
 ```sh
 cmake --preset core-debug
@@ -37,7 +40,7 @@ GUI interaction suite. Manually verify all nine pages, resizing, task editing,
 policy constraints, JSON load/save errors, reset, pause, timeline pan/zoom/hover,
 exports, comparison, shutdown during playback and shutdown during comparison.
 
-CI defines Windows/Linux core and desktop builds, plus Linux ASan/UBSan. It has
-not been run. ThreadSanitizer, clang-tidy and format enforcement are not CI gates
+CI runs Windows/Linux core and desktop builds, plus Linux ASan/UBSan.
+ThreadSanitizer, clang-tidy and format enforcement are not CI gates
 yet. The assets script parses JSON and verifies CMake file references only; it
 does not prove C++ syntax, scheduling correctness or QML runtime behavior.

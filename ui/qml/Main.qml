@@ -8,7 +8,7 @@ ApplicationWindow {
     visible: true
     width: 1380; height: 900
     minimumWidth: 960; minimumHeight: 650
-    title: "ChronOS - Scheduling Laboratory"
+    title: "ChronOS — Scheduling Laboratory"
     color: "#0c1422"
     palette.window: "#0c1422"; palette.windowText: "#dce7f5"
     palette.base: "#131f32"; palette.text: "#dce7f5"
@@ -78,7 +78,7 @@ ApplicationWindow {
                         }
                     }
                     Item { Layout.fillHeight: true }
-                    Label { text: "C++20 � Qt 6\nInteger virtual time\nUnverified build"; color: "#8d9fb9"; font.pixelSize: 12 }
+                    Label { text: "C++20 · Qt 6\nInteger virtual time\nDevelopment preview"; color: "#8d9fb9"; font.pixelSize: 12 }
                 }
             }
             StackLayout {
@@ -152,14 +152,14 @@ ApplicationWindow {
                 }
                 ColumnLayout {
                     Label { text: "Resource Monitor"; font.pixelSize: 26 }
-                    Label { text: "Owner / FIFO waiters � priority inheritance " + (root.config.priority_inheritance ? "ON" : "OFF"); color: "#54dfcf" }
+                    Label { text: "Owner / FIFO waiters · priority inheritance " + (root.config.priority_inheritance ? "ON" : "OFF"); color: "#54dfcf" }
                     ScrollView { Layout.fillWidth: true; Layout.fillHeight: true
                         TextArea { readOnly:true; text: root.pretty({resources:root.data.resources || [],jobs:(root.data.jobs || []).map(j=>({job:j.id,task:j.task,state:j.state,base:j.base_priority,effective:j.effective_priority,blocking:j.blocking}))}); font.family:"Consolas" }
                     }
                 }
                 ColumnLayout {
                     Label { text: "Interrupt Lab"; font.pixelSize: 26 }
-                    Label { text: "Latency = first service - arrival. Masks defer new handlers."; wrapMode: Text.Wrap; Layout.fillWidth:true }
+                    Label { text: "Latency = first service − arrival. Masks defer new handlers."; wrapMode: Text.Wrap; Layout.fillWidth:true }
                     Timeline { report:root.data; Layout.fillWidth:true; Layout.preferredHeight:230 }
                     ScrollView { Layout.fillWidth:true; Layout.fillHeight:true
                         TextArea { readOnly:true; text:root.pretty(root.data.interrupts || []); font.family:"Consolas" }
@@ -167,7 +167,7 @@ ApplicationWindow {
                 }
                 ColumnLayout {
                     Label { text: "Deadlock Analyzer"; font.pixelSize: 26 }
-                    Label { text: "Arrows: waiter  owner. Historical cycles stay recorded."; color:"#8d9fb9" }
+                    Label { text: "Arrows: waiter → owner. Historical cycles stay recorded."; color:"#8d9fb9" }
                     WaitGraph { report: root.data; Layout.fillWidth:true; Layout.fillHeight:true }
                     ScrollView { Layout.fillWidth:true; Layout.preferredHeight:140
                         TextArea { readOnly:true; text:root.pretty(root.data.deadlocks || []); font.family:"Consolas" }
@@ -212,13 +212,12 @@ ApplicationWindow {
                 }
                 ColumnLayout {
                     Label { text:"Settings & Model"; font.pixelSize:26 }
-                    Label { text:"Single CPU � integer virtual ticks � zero switch overhead\nFIFO mutex wake-up � higher number = higher fixed priority\nTies: stable ready order, then job ID\nDeadline misses do not terminate jobs\nStop pauses; Reset discards runtime history\nPlayback affects presentation delay only\nUI: last 2,000 events and 5,000 intervals; export: full trace\nExports: summary/scenario JSON, CSV tables, SVG timeline\nRTOS concepts simulator, not a production kernel."; lineHeight:1.5; wrapMode:Text.Wrap; Layout.fillWidth:true }
-                    Label { text:"Not compiled or runtime-tested in this environment."; color:"#f2bf65"; wrapMode:Text.Wrap; Layout.fillWidth:true }
+                    Label { text:"Single CPU · integer virtual ticks · zero switch overhead\nFIFO mutex wake-up · higher number = higher fixed priority\nTies: stable ready order, then job ID\nDeadline misses do not terminate jobs\nStop pauses; Reset discards runtime history\nPlayback affects presentation delay only\nUI: last 2,000 events and 5,000 intervals; export: full trace\nExports: summary/scenario JSON, CSV tables, SVG timeline\nRTOS concepts simulator, not a production kernel."; lineHeight:1.5; wrapMode:Text.Wrap; Layout.fillWidth:true }
+                    Label { text:"Windows/Linux CI covers builds, core tests and offscreen startup. Manual desktop interaction testing remains pending."; color:"#f2bf65"; wrapMode:Text.Wrap; Layout.fillWidth:true }
                     Item { Layout.fillHeight:true }
                 }
             }
         }
-        Label { text:"Trace events: "+(root.data.event_count || 0)+"    �    "+(root.config.description || ""); color:"#8d9fb9"; elide:Text.ElideRight; Layout.fillWidth:true }
+        Label { text:"Trace events: "+(root.data.event_count || 0)+"    ·    "+(root.config.description || ""); color:"#8d9fb9"; elide:Text.ElideRight; Layout.fillWidth:true }
     }
 }
-

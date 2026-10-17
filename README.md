@@ -6,11 +6,11 @@ ChronOS models job releases, scheduling, resource blocking, priority inversion,
 interrupts and deadlines using deterministic integer virtual time. It is an
 engineering/learning simulator, **not a functioning production RTOS kernel**.
 
-> Source implementation preview: C++ compilation, GoogleTest and Qt runtime
-> verification are pending. The authoring environment could run CMake but had
-> no usable C++20 compiler or Qt kit. Do not present this snapshot as a tested
-> release. The user explicitly requested continuing source work with local
-> compilation deferred to a later GitHub/CI session.
+> Development preview with passing GitHub Actions builds on Windows and Linux.
+> Core configurations pass 44 CTest entries each; Qt 6.8.3 configurations pass
+> 45 each, including an offscreen desktop launch. Linux ASan/UBSan passes 44.
+> See [CI verification](docs/ci-verification.md) for the exact source revision
+> and run. Full manual GUI testing and release packaging remain pending.
 
 ## Source capabilities
 
@@ -25,7 +25,7 @@ engineering/learning simulator, **not a functioning production RTOS kernel**.
 - CLI plus Qt/QML dashboard with a worker thread and value snapshots.
 - Timeline zoom, pan, hover, selection, deadline/preemption/blocking indicators.
 - 16 configurable scenarios; JSON/CSV/SVG reports; benchmark workload source.
-- 42 declared GoogleTest cases and unexecuted Windows/Linux CI workflows.
+- 42 GoogleTest cases, CLI integration checks and Windows/Linux CI workflows.
 
 There are no fabricated screenshots, pass counts, CI badges or performance claims.
 See [IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md) for incomplete work.
@@ -48,7 +48,7 @@ ctest --preset core-debug
 
 On Linux, install CMake, Git and a C++20 compiler. The same presets apply; a
 single-configuration generator puts executables in `build/core-debug/`, without
-the `Debug/` subdirectory. Compiler-specific setup is still unverified here.
+the `Debug/` subdirectory. Windows MSVC and Ubuntu GCC builds are covered by CI.
 
 ```sh
 ./build/core-debug/chronos-cli --scenario scenarios/priority-inheritance.json
@@ -81,9 +81,10 @@ All scenario fields remain editable in JSON. Task or policy edits reset the run.
 Stop pauses; Reset clears runtime history. The first event step processes time
 zero; +1 tick uses the same engine and advances one virtual tick.
 
-GUI sources and offscreen smoke test exist, but no desktop launch, interaction
-or resizing was verified. No screenshots were captured. Qt runtime deployment
-packaging (windeployqt/macdeployqt) and a distributable GUI binary are not included.
+The offscreen smoke test launches QML, steps the engine, starts/pauses playback
+and rejects QML warnings. Full manual interaction and visual/resizing inspection
+remain pending. No screenshots were captured. Qt runtime deployment packaging
+(windeployqt/macdeployqt) and a distributable GUI binary are not included.
 
 ## Demonstrations
 
@@ -97,8 +98,9 @@ packaging (windeployqt/macdeployqt) and a distributable GUI binary are not inclu
 | interrupt-storm | All service spent in handlers; worker misses deadline |
 | watchdog | Heartbeats at 2/4; timeout alerts at 9/14 |
 
-These are **expected references**, not measured execution results from this
-environment. Every scenario includes a description with its intended outcome.
+These are manual reference expectations. Exact FCFS, fixed-priority, inversion,
+inheritance, deadlock and watchdog outcomes are asserted by passing tests.
+Every bundled scenario also passes replay and accounting integration checks.
 
 ## Engineering documentation
 
@@ -127,8 +129,9 @@ cmake --build build/asan
 ctest --test-dir build/asan --output-on-failure
 ```
 
-Only the Node asset check and CMake preset listing ran locally. The GitHub
-Actions workflow is prepared for a future push and has **not** been executed.
-The project has not been published or pushed to a remote repository.
+Local compilation remains unavailable, but GitHub Actions has compiled and
+tested the project on Windows and Linux, including Qt smoke and ASan/UBSan.
+The source repository is [UmitGUL1/Chronos](https://github.com/UmitGUL1/Chronos).
+CI runs do not replace manual desktop interaction or performance measurements.
 
 License: MIT for project code. Dependencies retain their own licenses.

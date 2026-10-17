@@ -1,59 +1,61 @@
 # Implementation status — 2026-10-17
 
-## Source implementation preview, all C++ runtime verification pending
+## Development preview: Windows/Linux CI passes
 
-The complete supplied master prompt was read. Initially Phase 0 stopped at the
-missing-toolchain gate. CMake 3.31.12 was subsequently downloaded and its version
-command ran. GCC downloads timed out; an installed old Dev-C++ compiler could not
-launch because of a Windows DLL error. Qt was not found. The user then explicitly
-instructed that local verification be deferred and source development continue.
-This authorization overrides the original stop-at-unverified-phase requirement;
-it does not turn unexecuted tests into passing tests.
+[Verification evidence](docs/ci-verification.md) records successful run
+[39014818010](https://github.com/UmitGUL1/Chronos/actions/runs/39014818010)
+on source revision b43a10f30f590b13d58a9857254ddcd4857b50eb.
 
-| Phase | Source work | Verification |
-| --- | --- | --- |
-| 0 | CMake, presets, build targets, architecture | Presets parse; C++ build not verified |
-| 1 | Integer time, Task/Job, event heap, recording, CLI | Test source only |
-| 2 | Seven policies using concrete scheduler strategies | Reference test source only |
-| 3 | FIFO mutexes, inversion, transitive inheritance | Reference test source only |
-| 4 | Cycle detection, nested IRQs/masks, virtual watchdog | Test source only |
-| 5 | Metrics, model-limited RMS/EDF checks, comparison | Test source only |
-| 6 | Qt/QML nine-page GUI, timeline, tasks, graphs, controls | Not compiled/launched |
-| 7 | 16 JSON scenarios, comparison, replay, CSV/JSON/SVG | JSON syntax parsed; behavior not run |
-| 8 | jthread bridge, bounded queue/snapshot coalescing, benchmark | Stress/race/performance verification pending |
-| 9 | English docs, diagrams, license, CI, install rules | Screenshots and verified release packaging incomplete |
+- Windows and Ubuntu core Debug: **44 passed per platform**.
+- Windows and Ubuntu Qt 6.8.3 Debug: **45 passed per platform**.
+- Ubuntu AddressSanitizer + UndefinedBehaviorSanitizer: **44 passed**.
+- 42 GoogleTest cases + CLI help/reference; desktop adds one offscreen smoke.
+- All 16 JSON scenarios replay deterministically and conserve CPU/job service
+  in the scenario integration test.
 
-### Checks actually executed
+Local compiler installation failed earlier; source work continued under explicit
+user authorization. The project was subsequently uploaded to the user-created
+UmitGUL1/Chronos repository and real CI exposed/fixed compilation and QML errors.
+No local test execution is claimed.
 
-- `node chronos/scripts/check-assets.mjs`: successful; 16 scenario JSON documents
-  parsed, 17 referenced CMake source inputs present, 42 GoogleTest cases declared.
-  This check is structural, not a test execution result.
-- Portable `cmake --list-presets -S chronos`: successful; core-debug/desktop-debug.
-- Earlier configure probe: failed because nmake/C++ toolchain was unavailable.
-- C++ compile, CTest, sanitizers, Qt smoke and benchmarks: **NOT RUN**.
+| Phase | Implementation and verification scope |
+| --- | --- |
+| 0 | C++20/CMake configure/build succeeds on GCC/MSVC; Qt kit resolves in CI |
+| 1 | Time, jobs, events, recording, CLI: reference/invariant tests pass |
+| 2 | Seven policies: reference scheduling tests pass |
+| 3 | Mutexes, inversion and transitive inheritance: reference tests pass |
+| 4 | Cycles, nested IRQs/masks and virtual watchdog: tests pass |
+| 5 | Metrics and assumption-limited RMS/EDF analysis: reference tests pass |
+| 6 | Qt/QML builds and offscreen startup/worker smoke passes; full interaction pending |
+| 7 | 16 scenarios, replay, comparison and report persistence tests pass |
+| 8 | Worker/independent-engine tests pass; ASan/UBSan passes; race/stress/profile work pending |
+| 9 | English docs/diagrams/license/CI/install rules ready; screenshots/distribution packaging pending |
 
-### Current limitations
+## CI fixes
 
-Source correctness is not certified. First CI builds may expose compilation,
-QML, test or behavior failures requiring fixes. The engine uses linear scans of
-released jobs and can be quadratic on large workloads. Snapshot serialization
-copies full traces before UI clipping. Cancellation is at event batch boundaries,
-not inside a large batch/export. Source-level review found and addressed RR
-preemption accounting and snapshot coalescing refresh issues; the new paths
-remain unexecuted. GUI resource/interrupt details are inspection views; full
-configuration uses the JSON editor rather than bespoke form controls.
+Added the missing model namespace closure, removed an invalid QML Flow
+implicitHeight assignment, allowed automatic Qt architecture selection and
+enabled Windows console diagnostics for CTest. These fixes are included in the
+successful source revision above.
 
-The supplied spec's optional multiprocessor model, generalized deadlock recovery,
-watchdog restart/per-job watchdogs and analytical fixed-priority response-time
-recurrence are not implemented. Isolated scheduler latency and peak-memory
-measurement, ThreadSanitizer, comprehensive GUI interactions, immutable dependency
-hash locks and distributable Qt runtime bundles remain incomplete.
+## Limits and incomplete work
 
-### Next concrete actions
+Passing tests establish the covered references and bounded invariants, not a
+universal correctness guarantee or production RTOS certification. Manual
+interaction/visual/resizing checks, ThreadSanitizer, host stress, immutable
+dependency/action hash locks, benchmark results and Qt runtime deployment bundles
+remain pending. Resource/interrupt configuration uses the full JSON editor.
 
-1. Run Windows/Linux CI and fix all failures; do not add success badges in advance.
-2. Run Qt smoke plus manual page/control/resizing/shutdown checks.
-3. Collect actual benchmark and sanitizer evidence.
-4. Capture real screenshots and create a verified desktop release package.
+Scheduler/wait/donation operations scan jobs and can be quadratic. Snapshot
+serialization copies history before UI clipping. Cancellation is at event-batch
+boundaries and cannot interrupt a large batch or synchronous export.
 
-No remote repository was created, pushed, published or modified.
+Multi-core scheduling, generalized recovery, job restart/per-job watchdogs and
+fixed-priority response-time recurrence are not implemented. Isolated scheduler
+latency and peak-memory instrumentation are not implemented. No benchmark,
+coverage percentage, visual QA or packaged-release claim is made.
+
+## Next milestone
+
+Run manual desktop interaction/resize/shutdown checks, measure Release workloads,
+capture real screenshots and prepare a runtime-bundled Windows distribution.

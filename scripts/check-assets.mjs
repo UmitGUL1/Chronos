@@ -11,4 +11,4 @@ for(const path of paths)if(!existsSync(join(root,path)))throw new Error('Missing
 let tests=0;
 function walk(path){for(const entry of readdirSync(path,{withFileTypes:true})){const file=join(path,entry.name);if(entry.isDirectory())walk(file);else if(file.endsWith('.cpp'))tests+=(readFileSync(file,'utf8').match(/TEST\(/g)||[]).length;}}
 walk(join(root,'tests'));
-console.log(JSON.stringify({jsonScenariosParsed:files.length,cmakeInputsPresent:new Set(paths).size,testCasesDeclared:tests,note:'Static asset check only. C++ build, CTest and Qt runtime were NOT executed.'},null,2));
+console.log(JSON.stringify({jsonScenariosParsed:files.length,cmakeInputsPresent:new Set(paths).size,testCasesDeclared:tests,note:'This command checks assets only; it does not compile C++ or execute CTest/Qt.'},null,2));
