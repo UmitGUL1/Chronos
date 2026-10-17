@@ -38,6 +38,7 @@ int main(int argc, char* argv[]) {
         QObject::connect(capture, &QTimer::timeout, &application, [&, window, directory, stage] {
             if (!controller.error().isEmpty() || qmlWarnings) { application.exit(1); return; }
             if (!controller.report().value("finished").toBool()) return;
+            if (*stage == 0) controller.comparePolicies();
             const QStringList names{"dashboard.png", "scheduler-lab.png", "analytics.png"};
             const int pages[]{0, 1, 6};
             if (*stage % 2 == 0) {
